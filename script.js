@@ -16,6 +16,7 @@ if (estimator) {
   const priceOutput = estimator.querySelector('#estimate-price');
   const daysOutput = estimator.querySelector('#estimate-days');
   const pagesOutput = estimator.querySelector('#estimate-pages');
+  const calculateButton = estimator.querySelector('.calculator-calculate');
   const currency = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -43,6 +44,13 @@ if (estimator) {
 
   estimator.addEventListener('input', updateEstimate);
   estimator.addEventListener('change', updateEstimate);
+  calculateButton.addEventListener('click', () => {
+    updateEstimate();
+    const estimatePanel = priceOutput.closest('.estimate-panel');
+    const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height || 0;
+    const panelTop = estimatePanel.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: panelTop - headerHeight - 16, behavior: 'smooth' });
+  });
   updateEstimate();
 }
 
